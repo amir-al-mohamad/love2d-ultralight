@@ -1,0 +1,63 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: Build for Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: cargo build --release
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: target/release/love_ultralight.dll
+
+  build-linux:
+    name: Build for Linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential pkg-config libssl-dev
+      - name: Build
+        run: cargo build --release
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: target/release/liblove_ultralight.so
+
+  build-macos:
+    name: Build for macOS
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install toolchain targets
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
+      - name: Build arm64
+        run: cargo build --release --target aarch64-apple-darwin
+      - name: Build x86_64
+        run: cargo build --release --target x86_64-apple-darwin
+      - name: Create universal binary
+        run: |
+          mkdir -p target/universal
+          lipo -create \
+            target/aarch64-apple-darwin/release/liblove_ultralight.dylib \
+            target/x86_64-apple-darwin/release/liblove_ultralight.dylib \
+            -output target/universal/liblove_ultralight.dylib
+      - run: strip -x target/universal/liblove_ultralight.dylib
+      - run: install_name_tool -add_rpath @loader_path target/universal/liblove_ultralight.dylib
+      - name: Verify universal binary
+        run: lipo -info target/universal/liblove_ultralight.dylib
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: target/universal/liblove_ultralight.dylib
