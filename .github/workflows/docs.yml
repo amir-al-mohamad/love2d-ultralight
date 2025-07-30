@@ -1,0 +1,27 @@
+name: Generate and publish documentation
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate documentation
+        uses: lunarmodules/ldoc@v1.5.0
+        with:
+          args: .
+
+      - name: Archive documentation
+        run: |
+          cd doc_dist
+          zip -r ../docs.zip .
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: docs.zip

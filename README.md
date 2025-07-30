@@ -7,7 +7,7 @@ A lightweight WebView integration for [Love2D](https://love2d.org/) using [Ultra
   - [Ultralight SDK](https://ultralig.ht/) version 1.4.0.
 
 ## Documentation
-  - [API Reference](https://amir-al-mohamad.github.io/love2d-ultralight/)
+  - API Reference: download `docs.zip` archive for your version from [releases](https://github.com/amir-al-mohamad/love2d-ultralight/releases)
 
 ## Quick Start
 
@@ -19,7 +19,7 @@ A lightweight WebView integration for [Love2D](https://love2d.org/) using [Ultra
 2. **Extract the SDK** and copy all `.dll` files from the `bin` folder in the archive to the same directory as the module
 
 3. **Usage example:**  
-  See a usage example in the [documentation](https://amir-al-mohamad.github.io/love2d-ultralight/examples/usage.lua.html).
+  See usage example in documentation (download `docs.zip` for your version from [releases](https://github.com/amir-al-mohamad/love2d-ultralight/releases)).
 
 ## macOS Universal Binary (Universal `.dylib`) Build Instructions
 
@@ -41,3 +41,7 @@ To support both Apple Silicon (ARM64) and Intel (x86_64) Macs, you can create a 
   ```
 
 3. Copy the resulting universal `.dylib` files to the same directory as the module.
+
+## Credits
+
+This project uses [ul-next](https://github.com/Amjad50/ul-next) by [Amjad50](https://github.com/Amjad50).
