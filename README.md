@@ -1,5 +1,7 @@
 # Love2D Ultralight
 
+[![Build](https://github.com/amir-al-mohamad/love2d-ultralight/actions/workflows/build.yml/badge.svg)](https://github.com/amir-al-mohamad/love2d-ultralight/actions/workflows/build.yml)
+
 A lightweight WebView integration for [Love2D](https://love2d.org/) using [Ultralight](https://ultralig.ht/).
 
 ## Requirements

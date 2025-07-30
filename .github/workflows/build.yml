@@ -1,4 +1,4 @@
-name: Build and publish binaries
+name: Build
 
 on:
   push:
@@ -9,6 +9,28 @@ permissions:
   contents: write
 
 jobs:
+  generate-docs:
+    name: Generate Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate documentation
+        uses: lunarmodules/ldoc@v1.5.0
+        with:
+          args: .
+
+      - name: Archive documentation
+        run: |
+          cd doc_dist
+          zip -r ../docs.zip .
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: docs.zip
+
   build-windows:
     name: Build for Windows
     runs-on: windows-latest
